@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../assets/logo.png';
-import LinkButton from './Button';
+import LinkButton from './LinkButton';
 
 interface NavbarProps {}
 
@@ -13,7 +13,7 @@ function Navbar({}: NavbarProps) {
       <span className="text-2xl font-bold sm:text-xl sm:inline-flex">
         iKeen Finance
       </span>
-      {location.pathname !== '/' && <LinkButton href="/" text="Go to Home" />}
+      {location.pathname !== '/' && <LinkButton to="/">Go to Home</LinkButton>}
     </div>
   );
 }

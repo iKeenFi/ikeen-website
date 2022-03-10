@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { AllHTMLAttributes } from 'react';
 import { Link } from 'react-router-dom';
 
-interface CardProps {
-  children?: React.ReactNode;
-  className?: string;
-}
-
-function Card({ children, className }: CardProps) {
+function Card(props: AllHTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={'p-4 bg-gray-800 rounded-xl ' + className}>{children}</div>
+    <div {...props} className={'p-4 bg-gray-800 rounded-xl ' + props.className}>
+      {props.children}
+    </div>
   );
 }
 

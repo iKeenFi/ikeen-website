@@ -1,26 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { ButtonHTMLAttributes } from 'react';
 
-interface NavbarProps {
-  children?: React.ReactNode;
-  href: string;
-  text: string;
-  title?: string;
-}
-
-function LinkButton({ children, title, href, text }: NavbarProps) {
+function Button(props: ButtonHTMLAttributes<HTMLButtonElement>) {
+  let { children } = props;
   return (
     <>
-      <Link
-        title={title}
-        to={href}
-        className="p-2 px-4 text-center bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl w-fit"
+      <button
+        {...props}
+        className={
+          'p-2 px-4 text-center bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl ' +
+          props.className
+        }
       >
-        {text}
         {children}
-      </Link>
+      </button>
     </>
   );
 }
 
-export default LinkButton;
+export default Button;
