@@ -15,6 +15,8 @@ import { useWhitelistPrice } from '../hooks/useWhitelistPrice';
 import { useApprove } from '../hooks/useApprove';
 import { useBuyWhitelist } from '../hooks/useBuyWhitelist';
 import { convert } from '../lib/convertHelper';
+import { useWhitelistSpotsTaken } from '../hooks/useWhitelistSpots';
+import { ethers } from 'ethers';
 
 interface AppProps {}
 let tokens = {
@@ -46,6 +48,12 @@ function Whitelist({}: AppProps) {
   let allowance = useTokenAllowance(tokens[token], account, whitelistAddress);
   let balance = useTokenBalance(tokens[token], account);
   let [approveTxState, approve] = useApprove(tokens[token]);
+
+  let whitelistSpots = useWhitelistSpotsTaken();
+  let formattedWhitelistSpots =
+    whitelistSpots != undefined
+      ? ethers.BigNumber.from(whitelistSpots).toNumber()
+      : 0;
 
   let [whitelistTxState, buy] = useBuyWhitelist(tokens[token]);
   // can't find the right type for the synthetic event
@@ -82,10 +90,41 @@ function Whitelist({}: AppProps) {
           </div>
           {account && (
             <>
-              {whitelisted == undefined && <p>Loading...</p>}
-              {whitelisted == 0 && (
+              {whitelisted == undefined && (
+                <p>Loading data... (this shouldn't take more than 5 seconds)</p>
+              )}
+              {whitelisted !== undefined && (
                 <>
-                  <p>You can buy a whitelist spot!</p>
+                  {formattedWhitelistSpots == undefined && (
+                    <p>Loading whitelist spots...</p>
+                  )}
+
+                  {/* If you already bought */}
+                  {whitelisted >= 1 && (
+                    <p>
+                      {formattedWhitelistSpots}/200 spots taken. You are already
+                      whitelisted for the genesis pools.
+                    </p>
+                  )}
+                  {whitelisted == 0 && (
+                    <>
+                      {/* If unsold */}
+                      {formattedWhitelistSpots < 200 && (
+                        <p>
+                          {formattedWhitelistSpots}/200 spots taken. You can buy
+                          a whitelist spot!
+                        </p>
+                      )}
+                    </>
+                  )}
+
+                  {/* If sold out */}
+                  {formattedWhitelistSpots >= 200 && (
+                    <p>
+                      {formattedWhitelistSpots}/200 spots: The whitelist's all
+                      sold out! (Wow!)
+                    </p>
+                  )}
                   <p className="text-sm">
                     Logged in as{' '}
                     <a
@@ -104,7 +143,8 @@ function Whitelist({}: AppProps) {
                       >
                         the smart contract
                       </a>
-                      . DO NOT SEND TOKENS DIRECTLY THROUGH YOUR WALLET.
+                      . DO NOT SEND TOKENS (WAVAX/MIM/USDC/etc.) DIRECTLY
+                      THROUGH YOUR WALLET.
                     </p>
                   )}
                   <div className="flex flex-row gap-x-2 justify-center items-center">
@@ -124,53 +164,61 @@ function Whitelist({}: AppProps) {
                     {allowance == undefined && (
                       <DisabledLinkButton>Loading...</DisabledLinkButton>
                     )}
-                    {allowance?.eq(0) && (
+                    {formattedWhitelistSpots <= 200 && whitelisted == 0 && (
                       <>
-                        <Button onClick={approveToken}>Approve</Button>
-
-                        {whitelistTxState.status == 'PendingSignature' ||
-                          (whitelistTxState.status == 'Mining' && (
-                            <DisabledLinkButton>
-                              Approving...
-                            </DisabledLinkButton>
-                          ))}
-                      </>
-                    )}
-                    {allowance?.gt(0) && (
-                      <>
-                        {balance?.lt(
-                          convert(String(price), tokenDecimals[token]),
-                        ) && (
-                          <DisabledLinkButton>Not enough</DisabledLinkButton>
+                        {allowance?.eq(0) && (
+                          <>
+                            {approveTxState.status == 'None' && (
+                              <Button onClick={approveToken}>Approve</Button>
+                            )}
+                            {approveTxState.status == 'PendingSignature' ||
+                              (approveTxState.status == 'Mining' && (
+                                <DisabledLinkButton>
+                                  Approving...
+                                </DisabledLinkButton>
+                              ))}
+                          </>
                         )}
+                        {allowance?.gt(0) && (
+                          <>
+                            {balance?.lt(
+                              convert(String(price), tokenDecimals[token]),
+                            ) && (
+                              <DisabledLinkButton>
+                                Not enough
+                              </DisabledLinkButton>
+                            )}
 
-                        {balance?.gt(
-                          convert(String(price), tokenDecimals[token]),
-                        ) && <Button onClick={buyWhitelist}>Purchase</Button>}
+                            {balance?.gt(
+                              convert(String(price), tokenDecimals[token]),
+                            ) && (
+                              <>
+                                {whitelistTxState.status == 'None' && (
+                                  <Button onClick={buyWhitelist}>
+                                    Purchase
+                                  </Button>
+                                )}
+                                {whitelistTxState.status ==
+                                  'PendingSignature' ||
+                                  (whitelistTxState.status == 'Mining' && (
+                                    <DisabledLinkButton>
+                                      Purchasing...
+                                    </DisabledLinkButton>
+                                  ))}
+                              </>
+                            )}
+                          </>
+                        )}
                       </>
                     )}
-                  </div>
-                </>
-              )}
-              {whitelisted >= 1 && (
-                <>
-                  <p>You are already whitelisted for the genesis pools.</p>
-                  <div className="flex flex-row gap-x-2 justify-center items-center">
-                    <p>{price}</p>
-                    <select
-                      onChange={updateToken}
-                      value={token}
-                      className="text-white bg-gray-700 rounded-xl"
-                    >
-                      <option value="wavax">WAVAX</option>
-                      <option value="usdc">USDC</option>
-                      <option value="usdc.e">USDC.e</option>
-                      <option value="usdt">USDT</option>
-                      <option value="usdt.e">USDT.e</option>
-                      <option value="mim">MIM</option>
-                      <option value="dai.e">DAI.e</option>
-                    </select>
-                    <DisabledLinkButton>Can't Purchase</DisabledLinkButton>
+                    {/* If sold out */}
+                    {formattedWhitelistSpots >= 200 && (
+                      <DisabledLinkButton>Can't Purchase</DisabledLinkButton>
+                    )}
+                    {/* If you already bought */}
+                    {whitelisted >= 1 && (
+                      <DisabledLinkButton>Can't Purchase</DisabledLinkButton>
+                    )}
                   </div>
                 </>
               )}
