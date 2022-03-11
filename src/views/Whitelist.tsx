@@ -161,11 +161,12 @@ function Whitelist({}: AppProps) {
                       <option value="usdt.e">USDT.e</option>
                       <option value="mim">MIM</option>
                     </select>
-                    {allowance == undefined && (
-                      <DisabledLinkButton>Loading...</DisabledLinkButton>
-                    )}
+
                     {formattedWhitelistSpots <= 200 && whitelisted == 0 && (
                       <>
+                        {allowance == undefined && (
+                          <DisabledLinkButton>Loading...</DisabledLinkButton>
+                        )}
                         {allowance?.eq(0) && (
                           <>
                             {approveTxState.status == 'None' && (
