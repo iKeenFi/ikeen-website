@@ -11,7 +11,7 @@ function App({}: AppProps) {
   const { activateBrowserWallet, account } = useEthers();
   return (
     <>
-      <div className="flex flex-col flex-grow min-h-screen text-white bg-gray-900">
+      <div className="flex flex-col flex-grow min-h-screen text-white bg-center bg-no-repeat bg-cover bg-galaxy">
         <header>
           <Navbar />
         </header>

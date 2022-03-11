@@ -125,20 +125,34 @@ function Whitelist({}: AppProps) {
                       <DisabledLinkButton>Loading...</DisabledLinkButton>
                     )}
                     {allowance?.eq(0) && (
-                      <Button onClick={approveToken}>Approve</Button>
+                      <>
+                        <Button onClick={approveToken}>Approve</Button>
+
+                        {whitelistTxState.status == 'PendingSignature' ||
+                          (whitelistTxState.status == 'Mining' && (
+                            <DisabledLinkButton>
+                              Approving...
+                            </DisabledLinkButton>
+                          ))}
+                      </>
                     )}
-                    {allowance?.gt(0) &&
-                      balance?.lt(
-                        convert(String(price), tokenDecimals[token]),
-                      ) && <DisabledLinkButton>Not enough</DisabledLinkButton>}
-                    {allowance?.gt(0) &&
-                      balance?.gt(
-                        convert(String(price), tokenDecimals[token]),
-                      ) && <Button onClick={buyWhitelist}>Purchase</Button>}
+                    {allowance?.gt(0) && (
+                      <>
+                        {balance?.lt(
+                          convert(String(price), tokenDecimals[token]),
+                        ) && (
+                          <DisabledLinkButton>Not enough</DisabledLinkButton>
+                        )}
+
+                        {balance?.gt(
+                          convert(String(price), tokenDecimals[token]),
+                        ) && <Button onClick={buyWhitelist}>Purchase</Button>}
+                      </>
+                    )}
                   </div>
                 </>
               )}
-              {whitelisted > 1 && (
+              {whitelisted >= 1 && (
                 <>
                   <p>You are already whitelisted for the genesis pools.</p>
                   <div className="flex flex-row gap-x-2 justify-center items-center">

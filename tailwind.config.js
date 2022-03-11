@@ -9,4 +9,11 @@ module.exports = {
     require('@tailwindcss/forms'),
     // ...
   ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        galaxy: "url('./assets/galaxy.jpg')",
+      },
+    },
+  },
 };
