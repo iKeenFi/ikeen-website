@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "parcel './src/*.html'",
-    "build": "parcel build",
+    "build": "parcel build './src/*.html'",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
   },
