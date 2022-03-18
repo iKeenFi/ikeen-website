@@ -138,7 +138,7 @@ function Whitelist({}: AppProps) {
                     <p className="text-sm">
                       You can buy using normal AVAX by sending it directly to{' '}
                       <a
-                        href="https://snowtrace.io/address" 
+                        href="https://snowtrace.io/address/0x463791E15CcAe33de02C2B247aa75E8d4c2d9980" 
                         className="text-blue-300 underline"
                       >
                         the smart contract
