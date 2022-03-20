@@ -23,7 +23,7 @@ interface AppProps {}
 
 let mim = '0x130966628846BFd36ff31a822705796e8cb8C18D';
 let decimals = 18;
-const icoAddress = '0x5A71DC16476fb31Ff9C9fE5Bb35D6D02fCd6ee62';
+const icoAddress = '0xdca15a602eaad78addff14bcd8fcc70d28bf0a35';
 
 async function getNet(provider: ethers.providers.BaseProvider) {
   return await (
@@ -99,6 +99,9 @@ function ICO({}: AppProps) {
             Buy some iSKEEN Shares! Staking them (in the future) in the GALAXY
             will earn you rewards.
           </p>
+          <div className="flex flex-row gap-x-4">
+            <img src="" className="" />
+          </div>
           <div className="flex flex-row justify-items-stretch">
             {!account && (
               <Button onClick={activateBrowserWallet} className="w-full">
@@ -118,7 +121,7 @@ function ICO({}: AppProps) {
                     C-Chain. If you're experiencing trouble, please{' '}
                     <a
                       className="text-blue-200 underline"
-                      href="https://discord.gg"
+                      href="https://discord.gg/RFf6h7JaNz"
                     >
                       talk with us on our Discord server.
                     </a>

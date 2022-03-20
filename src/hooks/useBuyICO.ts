@@ -3,7 +3,7 @@ import { utils, Contract, BigNumber, ethers } from 'ethers';
 import { ICOABI, WhitelistABI } from '../abi';
 
 const ctrInterface = new utils.Interface(ICOABI);
-const contractAddr = '0x5A71DC16476fb31Ff9C9fE5Bb35D6D02fCd6ee62';
+const contractAddr = '0xdca15a602eaad78addff14bcd8fcc70d28bf0a35';
 
 const contract = new Contract(contractAddr, ctrInterface);
 
