@@ -97,7 +97,7 @@ function ICO({}: AppProps) {
           <h1 className="text-2xl font-bold text-center">iKeen ICO</h1>
           <p className="mb-2 text-sm font-bold text-center">
             Buy some iSKEEN Shares! Staking them (in the future) in the GALAXY
-            will earn you rewards.
+            will earn you rewards. Price per token : 1 MIM
           </p>
           <div className="flex flex-row gap-x-4">
             <img src="" className="" />
