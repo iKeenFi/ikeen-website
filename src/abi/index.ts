@@ -1,2 +1,3 @@
 import WhitelistABI from './Whitelist.json';
-export { WhitelistABI };
+import ICOABI from './ICOABI.json';
+export { WhitelistABI, ICOABI };

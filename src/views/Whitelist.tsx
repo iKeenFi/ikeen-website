@@ -91,7 +91,21 @@ function Whitelist({}: AppProps) {
           {account && (
             <>
               {whitelisted == undefined && (
-                <p>Loading data... (this shouldn't take more than 5 seconds).Please make sure your wallet is connected on Avalanche Network</p>
+                <>
+                  <p>
+                    Loading data... (this shouldn't take more than 5 seconds).
+                  </p>
+                  <p>
+                    Please make sure your wallet is connected to the Avalanche
+                    C-Chain. If you're experiencing trouble, please{' '}
+                    <a
+                      className="text-blue-200 underline"
+                      href="https://discord.gg"
+                    >
+                      talk with us on our Discord server.
+                    </a>
+                  </p>
+                </>
               )}
               {whitelisted !== undefined && (
                 <>
@@ -138,7 +152,7 @@ function Whitelist({}: AppProps) {
                     <p className="text-sm">
                       You can buy using normal AVAX by sending it directly to{' '}
                       <a
-                        href="https://snowtrace.io/address/0x463791E15CcAe33de02C2B247aa75E8d4c2d9980" 
+                        href="https://snowtrace.io/address/0x463791E15CcAe33de02C2B247aa75E8d4c2d9980"
                         className="text-blue-300 underline"
                       >
                         the smart contract
