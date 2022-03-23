@@ -23,7 +23,9 @@ function Home({}: AppProps) {
           <ul className="flex flex-col gap-y-4 items-stretch">
             <LinkButton to="./whitelist">Buy Genesis Whitelist</LinkButton>
             <LinkButton to="./ico">ICO</LinkButton>
-            <DisabledLinkButton>App</DisabledLinkButton>
+            <ExternalLinkButton href="https://dapp.ikeenfi.app">
+              App
+            </ExternalLinkButton>
             <ExternalLinkButton href="https://docs.ikeenfi.app">
               Docs
             </ExternalLinkButton>

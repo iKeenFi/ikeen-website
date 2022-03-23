@@ -90,6 +90,9 @@ function ICO({}: AppProps) {
     approve(icoAddress);
   };
 
+  // ico ended on the front end
+  formattedICOTokensTaken = 10000;
+
   return (
     <div className="flex flex-col p-2">
       <div className="flex flex-row justify-center text-center">
