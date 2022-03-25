@@ -21,8 +21,8 @@ function Home({}: AppProps) {
         />
         <Card>
           <ul className="flex flex-col gap-y-4 items-stretch">
-            <LinkButton to="./whitelist">Buy Genesis Whitelist</LinkButton>
-            <LinkButton to="./ico">ICO</LinkButton>
+            //<LinkButton to="./whitelist">Buy Genesis Whitelist</LinkButton>//
+            //<LinkButton to="./ico">ICO</LinkButton>//
             <ExternalLinkButton href="https://dapp.ikeenfi.app">
               App
             </ExternalLinkButton>
